@@ -45,6 +45,9 @@ export function createNewProjectForm() {
         
         // Update DOM to reflect changes
         updateProjectList(window.myTodoList);
+
+        // Clean up and show project details
+        updateContent(() => showProjectCard(newProject));
     });
 
     content.appendChild(projectNameLabel);
@@ -140,6 +143,10 @@ export function createNewTaskForm() {
 
             // Update DOM to reflect changes
             updateTaskList(window.myTodoList);
+
+            // Clean up and show task details
+            updateContent(() => showTaskCard(newTask));
+
         } else {
             console.log(`Project "${selectedProjectName}" not found.`);
         }
@@ -200,4 +207,80 @@ export function updateProjectList(todoList) {
 
         projectsListSection.appendChild(projectElement);
     });
+}
+
+export function showTaskCard(task) {
+    // Clear existing content
+    content.innerHTML = '';
+
+    // Create a container for the task details
+    const taskCardContainer = document.createElement('div');
+    taskCardContainer.classList.add('task-card');
+
+    // Task name
+    const taskNameElement = document.createElement('h2');
+    taskNameElement.innerText = task.name;
+    taskCardContainer.appendChild(taskNameElement);
+
+    // Task description
+    const taskDescriptionElement = document.createElement('p');
+    taskDescriptionElement.innerText = task.description;
+    taskCardContainer.appendChild(taskDescriptionElement);
+
+    // Task notes (checkbox and label)
+    const taskNotesElement = document.createElement('div');
+    const taskNotesCheckbox = document.createElement('input');
+    taskNotesCheckbox.type = 'checkbox';
+    taskNotesCheckbox.checked = task.notes;
+    taskNotesCheckbox.disabled = true;
+    const taskNotesLabel = document.createElement('label');
+    taskNotesLabel.innerText = 'Notes';
+    taskNotesElement.appendChild(taskNotesCheckbox);
+    taskNotesElement.appendChild(taskNotesLabel);
+    taskCardContainer.appendChild(taskNotesElement);
+
+    // Task date
+    const taskDateElement = document.createElement('p');
+    taskDateElement.innerText = task.date;
+    taskCardContainer.appendChild(taskDateElement);
+
+    // Task priority
+    const taskPriorityElement = document.createElement('p');
+    taskPriorityElement.innerText = task.priority;
+    taskCardContainer.appendChild(taskPriorityElement);
+
+    // Append task card container to content
+    content.appendChild(taskCardContainer);
+}
+
+export function showProjectCard(project) {
+    // Clear existing content
+    content.innerHTML = '';
+
+    // Create a container for the project details
+    const projectCardContainer = document.createElement('div');
+    projectCardContainer.classList.add('project-card');
+
+    // Project name
+    const projectNameElement = document.createElement('h2');
+    projectNameElement.innerText = project.name;
+    projectCardContainer.appendChild(projectNameElement);
+
+    // Project description
+    const projectDescriptionElement = document.createElement('p');
+    projectDescriptionElement.innerText = project.description;
+    projectCardContainer.appendChild(projectDescriptionElement);
+
+    // Show tasks related to the project
+    const projectTasksList = document.createElement('ul');
+    project.tasks.forEach(task => {
+        const taskItem = document.createElement('li');
+        taskItem.textContent = task.name;
+        projectTasksList.appendChild(taskItem);
+    });
+
+    projectCardContainer.appendChild(projectTasksList);
+    
+    // Append project card container to content
+    content.appendChild(projectCardContainer);
 }
