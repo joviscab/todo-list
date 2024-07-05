@@ -1,8 +1,11 @@
 // project.js
 import Task from './task.js';
 
+let nextProjectId = 1; // Unique ID generator for projects
+
 export default class Project {
     constructor(name, description) {
+        this.id = nextProjectId++;
         this.name = name;
         this.description = description;
         this.tasks = [];

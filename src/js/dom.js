@@ -1,17 +1,75 @@
 // dom.js
-
+import { saveToLocalStorage, getFromLocalStorage } from './storage.js';
+import TodoList from './todoList.js';
 import Project from './project.js';
 import Task from './task.js';
+
 
 const content = document.querySelector('.content');
 const newTaskButton = document.querySelector('.new-task-button');
 const newProjectButton = document.querySelector('.new-project-button');
+const projectsListSection = document.querySelector('.projects-list');
+const tasksListSection = document.querySelector('.tasks-list');
+
 
 // Update content function
 export function updateContent(createFunction) {
     content.innerHTML = '';
     createFunction();
 }
+
+
+// Function to load data from localStorage on page load
+export function loadFromStorage() {
+    const savedTodoList = getFromLocalStorage('todoList');
+    if (savedTodoList) {
+        window.myTodoList = new TodoList(savedTodoList.name);
+        savedTodoList.projects.forEach(projectData => {
+            const project = new Project(projectData.name, projectData.description);
+            project.id = projectData.id; // Assuming id needs to be assigned separately
+            projectData.tasks.forEach(taskData => {
+                const task = new Task(taskData.id, taskData.name, taskData.description, taskData.notes, taskData.date, taskData.priority);
+                project.addTask(task);
+            });
+            window.myTodoList.addProject(project);
+        });
+    } else {
+        // Initialize with default data if no saved data is found
+        window.myTodoList = new TodoList('Default TodoList');
+    }
+}
+
+// Function to save data to localStorage whenever changes occur
+export function saveToStorage() {
+    saveToLocalStorage('todoList', window.myTodoList);
+}
+
+
+// Update task list in the sidebar
+export function updateTaskList(todoList) {
+    tasksListSection.innerHTML = '';
+    todoList.projects.forEach(project => {
+        const projectElement = document.createElement('div');
+        projectElement.classList.add('project-item');
+        
+        const projectTasksList = document.createElement('ul');
+        project.tasks.forEach(task => {
+            const taskItem = document.createElement('li');
+            taskItem.textContent = task.name;
+            projectTasksList.appendChild(taskItem);
+        });
+
+        projectElement.appendChild(projectTasksList);
+        tasksListSection.appendChild(projectElement);
+    });
+}
+
+// Initialize sidebar lists on page load
+window.addEventListener('load', () => {
+    loadFromStorage();
+    updateProjectList(window.myTodoList);
+    updateTaskList(window.myTodoList);
+});
 
 export function createNewProjectForm() {
     const projectNameLabel = document.createElement('label');
@@ -48,7 +106,17 @@ export function createNewProjectForm() {
 
         // Clean up and show project details
         updateContent(() => showProjectCard(newProject));
+
+        // Save to localStorage
+        saveToStorage();
     });
+
+    // Initial load from localStorage
+    window.addEventListener('load', () => {
+    loadFromStorage();
+    updateProjectList(window.myTodoList);
+});
+
 
     content.appendChild(projectNameLabel);
     content.appendChild(projectNameInput);
@@ -147,6 +215,9 @@ export function createNewTaskForm() {
             // Clean up and show task details
             updateContent(() => showTaskCard(newTask));
 
+            // Save to localStorage
+            saveToStorage();
+
         } else {
             console.log(`Project "${selectedProjectName}" not found.`);
         }
@@ -172,28 +243,7 @@ export function setupEventListeners(todoList) {
     newTaskButton.addEventListener('click', () => updateContent(createNewTaskForm));
 }
 
-export function updateTaskList(todoList) {
-    const tasksListSection = document.querySelector('.tasks-list');
-    tasksListSection.innerHTML = '';
-
-    todoList.projects.forEach(project => {
-        const projectElement = document.createElement('div');
-        projectElement.classList.add('project-item');
-        
-        const projectTasksList = document.createElement('ul');
-        project.tasks.forEach(task => {
-            const taskItem = document.createElement('li');
-            taskItem.textContent = task.name;
-            projectTasksList.appendChild(taskItem);
-        });
-
-        projectElement.appendChild(projectTasksList);
-        tasksListSection.appendChild(projectElement);
-    });
-}
-
 export function updateProjectList(todoList) {
-    const projectsListSection = document.querySelector('.projects-list');
     projectsListSection.innerHTML = '';
 
     todoList.projects.forEach(project => {
