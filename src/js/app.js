@@ -1,19 +1,11 @@
 // app.js
-import { createNewTask } from './js/dom.js';
+import '../style/index.css';
+import { setupEventListeners } from './dom.js';
 import TodoList from './todoList.js';
-import * as DOM from './dom.js';
 
-// Example initialization or setup logic in app.js
-// Here you can set up event listeners or other application-wide logic
-document.querySelector('#new-task-button').addEventListener('click', () => {
-    createNewTask();
-});
+// Create an instance of the TodoList class
+const myTodoList = new TodoList('My Todo List');
+window.myTodoList = myTodoList; // Make it globally accessible
 
-// Other initialization or setup code as needed
-
-
-// Initialize TodoList
-const todoList = new TodoList();
-
-// Event listeners or initialization logic
-DOM.setupEventListeners(todoList); // Setup DOM event listeners
+// Set up event listeners for the DOM
+setupEventListeners(myTodoList);

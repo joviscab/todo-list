@@ -1,13 +1,29 @@
 // todoList.js
+import Project from './project.js';
+
 export default class TodoList {
-    constructor() {
-        this.tasks = [];
+    constructor(name) {
+        this.name = name;
+        this.projects = [];
     }
 
-    // Methods to add, delete, update tasks
-    addTask(task) {
-        this.tasks.push(task);
+    addProject(project) {
+        this.projects.push(project);
     }
 
-    // Other methods for managing tasks
+    removeProject(projectName) {
+        this.projects = this.projects.filter(project => project.name !== projectName);
+    }
+
+    getProject(projectName) {
+        return this.projects.find(project => project.name === projectName);
+    }
+
+    showProjects() {
+        console.log(`Projects in "${this.name}":`);
+        this.projects.forEach(project => {
+            console.log(`Project Name: ${project.name}, Description: ${project.description}`);
+            project.showTasks();
+        });
+    }
 }
