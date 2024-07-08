@@ -1,8 +1,8 @@
 // dom.js
-import { saveToLocalStorage, getFromLocalStorage } from './storage.js';
+import { saveToStorage, saveToLocalStorage, getFromLocalStorage } from './storage.js';
 import TodoList from './todoList.js';
 import Project from './project.js';
-import Task from './task.js';
+import Task, { nextTaskId } from './task.js';
 import trashIcon from '../img/trash.svg';
 
 const content = document.querySelector('.content');
@@ -45,12 +45,7 @@ export function loadFromStorage() {
         showProjectCard(defaultProject);
     }
 
-    console.log('Initialized todo list:', window.myTodoList);
-}
-
-// Function to save data to localStorage whenever changes occur
-export function saveToStorage() {
-    saveToLocalStorage('todoList', window.myTodoList);
+    console.log('Initialized todo list:', myTodoList);
 }
 
 // Update task list in the sidebar
@@ -163,6 +158,9 @@ export function createNewProjectForm() {
         
         console.log('New project added:');
         window.myTodoList.showProjects();
+
+        // Save to localStorage
+        saveToStorage();
         
         // Update DOM to reflect changes
         updateProjectList(window.myTodoList);
@@ -170,8 +168,7 @@ export function createNewProjectForm() {
         // Clean up and show project details
         updateContent(() => showProjectCard(newProject));
 
-        // Save to localStorage
-        saveToStorage();
+
     });
 
     // Initial load from localStorage
@@ -256,7 +253,6 @@ export function createNewTaskForm() {
     submitNewTask.classList.add('submit-button');
 
     submitNewTask.addEventListener('click', () => {
-        const taskId = Date.now();
         const taskName = newTaskTitle.value;
         const taskDescription = newTaskDescription.value;
         const taskNotes = newTaskNotes.value;
@@ -264,7 +260,7 @@ export function createNewTaskForm() {
         const taskPriority = newTaskPriorityDropdown.value;
         const selectedProjectName = selectProjectDropdown.value;
 
-        const newTask = new Task(taskId, taskName, taskDescription, taskNotes, taskDate, taskPriority);
+        const newTask = new Task(taskName, taskDescription, taskNotes, taskDate, taskPriority);
         const project = window.myTodoList.getProject(selectedProjectName);
 
         if (project) {

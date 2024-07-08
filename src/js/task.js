@@ -3,7 +3,7 @@
 let nextTaskId = 1;
 
 export default class Task {
-    constructor(id, name, description, notes, date, priority, completed = false) {
+    constructor(name, description, notes, date, priority, completed = false) {
         this.id = nextTaskId++;
         this.name = name;
         this.description = description;
@@ -13,3 +13,5 @@ export default class Task {
         this.completed = completed;
     }
 }
+
+export { nextTaskId }; 

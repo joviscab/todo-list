@@ -9,6 +9,10 @@ h1 {
     margin: 0;
 }
 
+ul {
+    margin: 0;
+}
+
 a, i {
     text-decoration: none;
     color: black;
@@ -57,8 +61,10 @@ footer, footer > p {
     grid-template-rows: 0.1fr 1fr 1fr;
     grid-template-columns: 1fr;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     font-size: 0.7rem;
+    margin-left: -1rem;
+    margin-right: 1.2rem;
 }
 
 .projects-menu {
@@ -67,8 +73,10 @@ footer, footer > p {
     grid-template-rows: 0.1fr 1fr 1fr;
     grid-template-columns: 1fr;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     font-size: 0.7rem;
+    margin-left: -1rem;
+    margin-right: 1.2rem;
 }
 
 .tasks-title,
@@ -77,6 +85,7 @@ footer, footer > p {
     grid-column: 1 / 2;
     display: flex;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .new-task-button {
@@ -86,7 +95,6 @@ footer, footer > p {
     background: none;
     border: none;
     padding: 0;
-    margin-top: 4px;
     margin-right: 80px;
     display: flex;
     justify-content:end;
@@ -101,7 +109,6 @@ footer, footer > p {
     padding: 0;
     display: flex;
     justify-content:end;
-    margin-top: 4px;
     margin-right: 65px;
 }
 
@@ -129,6 +136,7 @@ footer, footer > p {
     padding-left: 7rem;
     background-color: rgba(128, 128, 128, 0.153);
     box-shadow: 1px 2px 9px 0px rgba(0, 0, 0, 0.162);
+    max-width: 30rem;
 }
 
 .content {
@@ -190,12 +198,12 @@ footer, footer > p {
 .tasks-list li,
 .projects-list li {
     display: grid;
-    justify-content: start;
+    justify-content: center;
     align-content: center;
-    background: url('../img/circle.svg') no-repeat left 2px / 18px 18px;
     font-size: 1rem;
-    padding-left: 2em;
     cursor: pointer;
+    border-bottom: dashed 1px black;
+    padding-bottom: 5px;
 }
 
 .delete-icon {
@@ -211,6 +219,6 @@ footer, footer > p {
 li.project-item,
 li.task-item {
     display: flex;
-    gap: 1rem;
+    gap: 0.2rem;
     margin-bottom: 0.5rem;
 }
