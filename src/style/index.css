@@ -200,6 +200,7 @@ footer, footer > p {
 
 .delete-icon {
     cursor: pointer;
+    margin-top: 3px;
 }
 
 .delete-icon:hover {
@@ -210,6 +211,6 @@ footer, footer > p {
 li.project-item,
 li.task-item {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom: 0.5rem;
 }

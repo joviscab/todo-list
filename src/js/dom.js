@@ -64,10 +64,16 @@ export function updateTaskList(todoList) {
             deleteIcon.setAttribute('width', '15');
 
             // Add event listener to the delete icon
-            deleteIcon.addEventListener('click', () => {
+            deleteIcon.addEventListener('click', (event) => {
+                event.stopPropagation();
                 project.removeTask(task.id);
                 saveToStorage();
                 updateTaskList(todoList);
+            });
+
+            // Add event listener to the task link
+            taskElement.addEventListener('click', () => {
+                showTaskCard(task);
             });
 
             taskElement.appendChild(deleteIcon);  
@@ -96,10 +102,16 @@ export function updateProjectList(todoList) {
         deleteIcon.setAttribute("width", "15");
 
         // Add event listener to the delete icon
-        deleteIcon.addEventListener('click', () => {
+        deleteIcon.addEventListener('click', (event) => {
+            event.stopPropagation();
             todoList.removeProject(project.id);
             saveToStorage();
             updateProjectList(todoList);
+        });
+
+        // Add event listener to the task link
+            projectElement.addEventListener('click', () => {
+            showProjectCard(project);
         });
 
         projectElement.appendChild(deleteIcon);  
