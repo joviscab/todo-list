@@ -187,16 +187,29 @@ footer, footer > p {
     margin: 10px 0;
 }
 
-.tasks-list,
-.projects-list {
+.tasks-list li,
+.projects-list li {
     display: grid;
     justify-content: start;
     align-content: center;
-    list-style: georgian inside url('../img/circle.svg');
+    background: url('../img/circle.svg') no-repeat left 2px / 18px 18px;
     font-size: 1rem;
-    padding-left: 40px;
+    padding-left: 2em;
+    cursor: pointer;
 }
 
 .delete-icon {
-    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    height: 16px;
+    width: 16px;
+}
+
+li.project-item,
+li.task-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 0.5rem;
 }

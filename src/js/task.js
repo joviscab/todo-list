@@ -1,7 +1,10 @@
 // task.js
+
+let nextTaskId = 1;
+
 export default class Task {
     constructor(id, name, description, notes, date, priority, completed = false) {
-        this.id = id;
+        this.id = nextTaskId++;
         this.name = name;
         this.description = description;
         this.notes = notes;

@@ -63,6 +63,13 @@ export function updateTaskList(todoList) {
             deleteIcon.setAttribute('height', '15');
             deleteIcon.setAttribute('width', '15');
 
+            // Add event listener to the delete icon
+            deleteIcon.addEventListener('click', () => {
+                project.removeTask(task.id);
+                saveToStorage();
+                updateTaskList(todoList);
+            });
+
             taskElement.appendChild(deleteIcon);  
             tasksListTitles.appendChild(taskElement);
         });
@@ -70,6 +77,38 @@ export function updateTaskList(todoList) {
 
     tasksListSection.appendChild(tasksListTitles); 
 }
+
+
+// Update projects list in the sidebar
+export function updateProjectList(todoList) {
+    projectsListSection.innerHTML = '';
+
+    const projectsListTitles = document.createElement('ul');
+    todoList.projects.forEach(project => {
+        const projectElement = document.createElement('li');
+        projectElement.classList.add('project-item');
+        projectElement.innerHTML = project.name;
+
+        const deleteIcon = document.createElement('img');
+        deleteIcon.classList.add('delete-icon');
+        deleteIcon.setAttribute('src', trashIcon);
+        deleteIcon.setAttribute("height", "15");
+        deleteIcon.setAttribute("width", "15");
+
+        // Add event listener to the delete icon
+        deleteIcon.addEventListener('click', () => {
+            todoList.removeProject(project.id);
+            saveToStorage();
+            updateProjectList(todoList);
+        });
+
+        projectElement.appendChild(deleteIcon);  
+        projectsListTitles.appendChild(projectElement);
+    });
+
+    projectsListSection.appendChild(projectsListTitles); 
+}
+
 
 // Initialize sidebar lists on page load
 window.addEventListener('load', () => {
@@ -248,28 +287,6 @@ export function createNewTaskForm() {
 export function setupEventListeners(todoList) {
     newProjectButton.addEventListener('click', () => updateContent(createNewProjectForm));
     newTaskButton.addEventListener('click', () => updateContent(createNewTaskForm));
-}
-
-export function updateProjectList(todoList) {
-    projectsListSection.innerHTML = '';
-
-    const projectsListTitles = document.createElement('ul');
-    todoList.projects.forEach(project => {
-        const projectElement = document.createElement('li');
-        projectElement.classList.add('project-item');
-        projectElement.innerHTML = project.name;
-
-        const deleteIcon = document.createElement('img');
-        deleteIcon.classList.add('delete-icon');
-        deleteIcon.setAttribute('src', trashIcon);
-        deleteIcon.setAttribute("height", "15");
-        deleteIcon.setAttribute("width", "15");
-
-        projectElement.appendChild(deleteIcon);  
-        projectsListTitles.appendChild(projectElement);
-    });
-
-    projectsListSection.appendChild(projectsListTitles); 
 }
 
 export function showTaskCard(task) {
