@@ -54,23 +54,21 @@ footer, footer > p {
 .tasks-menu {
     grid-row: 2 / 3;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
     grid-template-columns: 1fr;
     justify-content: center;
     align-items: center;
     font-size: 0.7rem;
-    gap: 1rem;
 }
 
 .projects-menu {
     grid-row: 3 / 4;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
     grid-template-columns: 1fr;
     justify-content: center;
     align-items: center;
     font-size: 0.7rem;
-    gap: 1rem;
 }
 
 .tasks-title,
@@ -189,32 +187,16 @@ footer, footer > p {
     margin: 10px 0;
 }
 
-.default-task-title-label,
-.default-task-description-label,
-.default-task-notes-title,
-.default-task-date-label,
-.default-task-priority-label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.default-task-title,
-.default-task-description,
-.default-task-date,
-.default-task-priority,
-.default-task-notes-label {
-    margin-top: 5px;
-    border-bottom: dashed 2px rgba(0, 0, 0, 0.132);
-}
-
-.defaultTaskNotes {
-    margin-right: 10px;
-}
-
-.default-task-list-title {
-    text-align: center;
+.tasks-list,
+.projects-list {
+    display: grid;
+    justify-content: start;
+    align-content: center;
+    list-style: georgian inside url('../img/circle.svg');
     font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
+    padding-left: 40px;
+}
+
+.delete-icon {
+    margin-left: 1rem;
 }

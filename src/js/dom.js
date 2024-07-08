@@ -3,6 +3,7 @@ import { saveToLocalStorage, getFromLocalStorage } from './storage.js';
 import TodoList from './todoList.js';
 import Project from './project.js';
 import Task from './task.js';
+import trashIcon from '../img/trash.svg';
 
 
 const content = document.querySelector('.content');
@@ -48,20 +49,26 @@ export function saveToStorage() {
 // Update task list in the sidebar
 export function updateTaskList(todoList) {
     tasksListSection.innerHTML = '';
-    todoList.projects.forEach(project => {
-        const projectElement = document.createElement('div');
-        projectElement.classList.add('project-item');
-        
-        const projectTasksList = document.createElement('ul');
-        project.tasks.forEach(task => {
-            const taskItem = document.createElement('li');
-            taskItem.textContent = task.name;
-            projectTasksList.appendChild(taskItem);
-        });
 
-        projectElement.appendChild(projectTasksList);
-        tasksListSection.appendChild(projectElement);
+    const tasksListTitles = document.createElement('ul');
+    todoList.projects.forEach(project => {
+        project.tasks.forEach(task => {
+            const taskElement = document.createElement('li');
+            taskElement.classList.add('task-item');
+            taskElement.innerHTML = task.name;
+
+            const deleteIcon = document.createElement('img');
+            deleteIcon.classList.add('delete-icon');
+            deleteIcon.setAttribute('src', trashIcon);
+            deleteIcon.setAttribute('height', '15');
+            deleteIcon.setAttribute('width', '15');
+
+            taskElement.appendChild(deleteIcon);  
+            tasksListTitles.appendChild(taskElement);
+        });
     });
+
+    tasksListSection.appendChild(tasksListTitles); 
 }
 
 // Initialize sidebar lists on page load
@@ -246,17 +253,23 @@ export function setupEventListeners(todoList) {
 export function updateProjectList(todoList) {
     projectsListSection.innerHTML = '';
 
+    const projectsListTitles = document.createElement('ul');
     todoList.projects.forEach(project => {
-        const projectElement = document.createElement('div');
+        const projectElement = document.createElement('li');
         projectElement.classList.add('project-item');
-        projectElement.innerHTML = `<h3>${project.name}</h3>`;
-        
-        const projectDescription = document.createElement('p');
-        projectDescription.textContent = project.description;
-        projectElement.appendChild(projectDescription);
+        projectElement.innerHTML = project.name;
 
-        projectsListSection.appendChild(projectElement);
+        const deleteIcon = document.createElement('img');
+        deleteIcon.classList.add('delete-icon');
+        deleteIcon.setAttribute('src', trashIcon);
+        deleteIcon.setAttribute("height", "15");
+        deleteIcon.setAttribute("width", "15");
+
+        projectElement.appendChild(deleteIcon);  
+        projectsListTitles.appendChild(projectElement);
     });
+
+    projectsListSection.appendChild(projectsListTitles); 
 }
 
 export function showTaskCard(task) {
