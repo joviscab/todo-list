@@ -108,6 +108,7 @@ export function updateProjectList(todoList) {
             todoList.removeProject(project.id);
             saveToStorage();
             updateProjectList(todoList);
+            updateTaskList(todoList);
         });
 
         // Add event listener to the task link
