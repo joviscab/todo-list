@@ -11,6 +11,9 @@ myTodoList.loadFromLocalStorage();
 updateProjectList(myTodoList);
 updateTaskList(myTodoList);
 
-
 // Set up event listeners for the DOM
 setupEventListeners(myTodoList);
+
+
+console.log('Initialized default project:', myTodoList);
+

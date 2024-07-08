@@ -5,13 +5,11 @@ import Project from './project.js';
 import Task from './task.js';
 import trashIcon from '../img/trash.svg';
 
-
 const content = document.querySelector('.content');
 const newTaskButton = document.querySelector('.new-task-button');
 const newProjectButton = document.querySelector('.new-project-button');
 const projectsListSection = document.querySelector('.projects-list');
 const tasksListSection = document.querySelector('.tasks-list');
-
 
 // Update content function
 export function updateContent(createFunction) {
@@ -19,32 +17,41 @@ export function updateContent(createFunction) {
     createFunction();
 }
 
-
 // Function to load data from localStorage on page load
 export function loadFromStorage() {
-    const savedTodoList = getFromLocalStorage('todoList');
-    if (savedTodoList) {
+    const savedTodoList = getFromLocalStorage('myTodoList');
+    
+    if (savedTodoList && savedTodoList.projects) {
         window.myTodoList = new TodoList(savedTodoList.name);
-        savedTodoList.projects.forEach(projectData => {
+        (savedTodoList.projects || []).forEach(projectData => {
             const project = new Project(projectData.name, projectData.description);
             project.id = projectData.id; // Assuming id needs to be assigned separately
-            projectData.tasks.forEach(taskData => {
-                const task = new Task(taskData.id, taskData.name, taskData.description, taskData.notes, taskData.date, taskData.priority);
+            
+            (projectData.tasks || []).forEach(taskData => {
+                const task = new Task(taskData.name, taskData.description, taskData.notes, taskData.date, taskData.priority, taskData.completed);
+                task.id = taskData.id; // Assuming id needs to be assigned separately
                 project.addTask(task);
             });
+            
             window.myTodoList.addProject(project);
         });
     } else {
         // Initialize with default data if no saved data is found
         window.myTodoList = new TodoList('Default TodoList');
+        window.myTodoList.initializeDefaults();
+
+        // Display the default project on the screen
+        const defaultProject = window.myTodoList.projects[0];
+        showProjectCard(defaultProject);
     }
+
+    console.log('Initialized todo list:', window.myTodoList);
 }
 
 // Function to save data to localStorage whenever changes occur
 export function saveToStorage() {
     saveToLocalStorage('todoList', window.myTodoList);
 }
-
 
 // Update task list in the sidebar
 export function updateTaskList(todoList) {
@@ -84,7 +91,6 @@ export function updateTaskList(todoList) {
     tasksListSection.appendChild(tasksListTitles); 
 }
 
-
 // Update projects list in the sidebar
 export function updateProjectList(todoList) {
     projectsListSection.innerHTML = '';
@@ -120,7 +126,6 @@ export function updateProjectList(todoList) {
 
     projectsListSection.appendChild(projectsListTitles); 
 }
-
 
 // Initialize sidebar lists on page load
 window.addEventListener('load', () => {
@@ -302,12 +307,18 @@ export function setupEventListeners(todoList) {
 }
 
 export function showTaskCard(task) {
-    // Clear existing content
+    // Clear content
     content.innerHTML = '';
 
     // Create a container for the task details
     const taskCardContainer = document.createElement('div');
     taskCardContainer.classList.add('task-card');
+
+    // Task label
+    const taskLabel = document.createElement('h2');
+    taskLabel.innerText = 'Task:';
+    taskLabel.classList.add('new-task-title');
+    taskCardContainer.appendChild(taskLabel);
 
     // Task name
     const taskNameElement = document.createElement('h2');
