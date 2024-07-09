@@ -4,6 +4,8 @@ import TodoList from './todoList.js';
 import Project from './project.js';
 import Task, { nextTaskId } from './task.js';
 import trashIcon from '../img/trash.svg';
+import circleCheckIcon from '../img/circle.svg';
+import circleCheckedIcon from '../img/check-circle.svg';
 
 const content = document.querySelector('.content');
 const newTaskButton = document.querySelector('.new-task-button');
@@ -59,6 +61,7 @@ export function updateTaskList(todoList) {
             taskElement.classList.add('task-item');
             taskElement.innerHTML = task.name;
 
+            // Delete icon
             const deleteIcon = document.createElement('img');
             deleteIcon.classList.add('delete-icon');
             deleteIcon.setAttribute('src', trashIcon);
@@ -73,11 +76,38 @@ export function updateTaskList(todoList) {
                 updateTaskList(todoList);
             });
 
-            // Add event listener to the task link
-            taskElement.addEventListener('click', () => {
-                showTaskCard(task, project);
+            // Check icon
+            const checkIcon = document.createElement('img');
+            checkIcon.classList.add('check-icon');
+            checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+            checkIcon.setAttribute('height', '15');
+            checkIcon.setAttribute('width', '15');
+            
+            // Add event listener to the check icon 
+            checkIcon.addEventListener('click', (event) => {
+                event.stopPropagation();
+                // Toggle the task status
+                task.completed = !task.completed;
+                // Update the icon's src attribute
+                checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+                // Save changes to localStorage or wherever you persist your data
+                // Update the task list to reflect changes
+                saveToStorage();
+                // Update the task card if it is currently displayed
+                showTaskCard(task, project, todoList);
+                // If the task card is currently displayed, update its status element
+                const taskCardStatusElement = document.querySelector('.task-card .show-task-status-label + p');
+                if (taskCardStatusElement && taskCardStatusElement.innerText.includes(task.name)) {
+                    taskCardStatusElement.innerText = task.getCompletedStatus();
+                }
             });
 
+            // Add event listener to the task link
+            taskElement.addEventListener('click', () => {
+                showTaskCard(task, project, todoList);
+            });
+
+            taskElement.appendChild(checkIcon); 
             taskElement.appendChild(deleteIcon);  
             tasksListTitles.appendChild(taskElement);
         });
@@ -303,7 +333,7 @@ export function setupEventListeners(todoList) {
     newTaskButton.addEventListener('click', () => updateContent(createNewTaskForm));
 }
 
-export function showTaskCard(task, project) {
+export function showTaskCard(task, project, todoList) {
     // Clear content
     content.innerHTML = '';
 
@@ -377,6 +407,28 @@ export function showTaskCard(task, project) {
     taskStatusElement.innerText = `${task.getCompletedStatus()}`;
     taskCardContainer.appendChild(taskStatusElement);
 
+    // Check icon
+    const checkIcon = document.createElement('img');
+    checkIcon.classList.add('check-icon');
+    checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+    checkIcon.setAttribute('height', '15');
+    checkIcon.setAttribute('width', '15');
+    
+    // Add event listener to the check icon to toggle task status
+    checkIcon.addEventListener('click', () => {
+        // Toggle the task status
+        task.completed = !task.completed;
+        // Update the icon's src attribute
+        checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+        // Update the displayed status text
+        taskStatusElement.innerText = task.getCompletedStatus();
+        // Save changes to localStorage or wherever you persist your data
+        saveToStorage();
+        // Update the task list to reflect changes
+        updateTaskList(todoList);
+    });
+    taskCardContainer.appendChild(checkIcon);
+
     // Task priority label
     const tasksProjectLabel = document.createElement('h4');
     tasksProjectLabel.innerText = 'Project:';
@@ -388,22 +440,11 @@ export function showTaskCard(task, project) {
     taskProjectElement.innerText = `${project ? project.name : 'No project'}`;
     taskCardContainer.appendChild(taskProjectElement);
 
-    // Toggle status button
-    const toggleStatusButton = document.createElement('button');
-    toggleStatusButton.innerText = 'Set Done';
-    toggleStatusButton.classList.add('toggle-status-button');
-    toggleStatusButton.addEventListener('click', () => {
-        // Toggle the task status
-        task.completed = !task.completed;
-        // Update the displayed status text
-        taskStatusElement.innerText = `${task.getCompletedStatus()}`;
-        // Save changes to localStorage or wherever you persist your data
-        saveToStorage();
-    });
-    taskCardContainer.appendChild(toggleStatusButton);
-
     // Append task card container to content
     content.appendChild(taskCardContainer);
+
+    // Return taskStatusElement for external updates
+    return taskStatusElement;
 }
 
 export function showProjectCard(project) {
