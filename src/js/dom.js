@@ -339,16 +339,9 @@ export function showTaskCard(task, project) {
     taskShowNotesLabel.classList.add('show-task-notes-label');
     taskCardContainer.appendChild(taskShowNotesLabel);
 
-    // Task notes (checkbox and label)
-    const taskNotesElement = document.createElement('div');
-    const taskNotesCheckbox = document.createElement('input');
-    taskNotesCheckbox.type = 'checkbox';
-    taskNotesCheckbox.checked = task.notes;
-    taskNotesCheckbox.disabled = true;
-    const taskNotesLabel = document.createElement('label');
-    taskNotesLabel.innerText = 'Notes';
-    taskNotesElement.appendChild(taskNotesCheckbox);
-    taskNotesElement.appendChild(taskNotesLabel);
+    // Task notes 
+    const taskNotesElement = document.createElement('li');
+    taskNotesElement.innerText = task.notes;
     taskCardContainer.appendChild(taskNotesElement);
 
     // Task date label
