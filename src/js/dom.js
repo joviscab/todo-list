@@ -489,6 +489,9 @@ export function showProjectCard(project) {
     project.tasks.forEach(task => {
         const taskItem = document.createElement('li');
         taskItem.textContent = task.name;
+        if (task.completed) {
+            taskItem.classList.add('strikethrough');
+        }
         projectTasksList.appendChild(taskItem);
     });
 

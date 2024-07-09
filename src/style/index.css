@@ -226,3 +226,8 @@ li.task-item {
 .strikethrough {
     text-decoration: line-through;
 }
+
+.check-icon {
+    display: flex;
+    justify-self: start;
+}
