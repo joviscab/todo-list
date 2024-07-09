@@ -388,6 +388,20 @@ export function showTaskCard(task, project) {
     taskProjectElement.innerText = `${project ? project.name : 'No project'}`;
     taskCardContainer.appendChild(taskProjectElement);
 
+    // Toggle status button
+    const toggleStatusButton = document.createElement('button');
+    toggleStatusButton.innerText = 'Set Done';
+    toggleStatusButton.classList.add('toggle-status-button');
+    toggleStatusButton.addEventListener('click', () => {
+        // Toggle the task status
+        task.completed = !task.completed;
+        // Update the displayed status text
+        taskStatusElement.innerText = `${task.getCompletedStatus()}`;
+        // Save changes to localStorage or wherever you persist your data
+        saveToStorage();
+    });
+    taskCardContainer.appendChild(toggleStatusButton);
+
     // Append task card container to content
     content.appendChild(taskCardContainer);
 }
