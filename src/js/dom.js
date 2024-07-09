@@ -61,58 +61,55 @@ export function updateTaskList(todoList) {
             taskElement.classList.add('task-item');
             taskElement.innerHTML = task.name;
 
-            // Delete icon
-            const deleteIcon = document.createElement('img');
-            deleteIcon.classList.add('delete-icon');
-            deleteIcon.setAttribute('src', trashIcon);
-            deleteIcon.setAttribute('height', '15');
-            deleteIcon.setAttribute('width', '15');
+    // Delete icon
+    const deleteIcon = document.createElement('img');
+    deleteIcon.classList.add('delete-icon');
+    deleteIcon.setAttribute('src', trashIcon);
+    deleteIcon.setAttribute('height', '15');
+    deleteIcon.setAttribute('width', '15');
 
-            // Add event listener to the delete icon
-            deleteIcon.addEventListener('click', (event) => {
-                event.stopPropagation();
-                project.removeTask(task.id);
-                saveToStorage();
-                updateTaskList(todoList);
-            });
+    // Add event listener to the delete icon
+    deleteIcon.addEventListener('click', (event) => {
+    event.stopPropagation();
+    project.removeTask(task.id);
+    saveToStorage();
+    updateTaskList(todoList);
+});
 
-            // Check icon
-            const checkIcon = document.createElement('img');
-            checkIcon.classList.add('check-icon');
-            checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-            checkIcon.setAttribute('height', '15');
-            checkIcon.setAttribute('width', '15');
+    // Check icon
+    const checkIcon = document.createElement('img');
+    checkIcon.classList.add('check-icon');
+    checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+    checkIcon.setAttribute('height', '15');
+    checkIcon.setAttribute('width', '15');
+
+    // Apply strikethrough if the task is completed
+    if (task.completed) {
+        taskElement.classList.add('strikethrough');
+    } else {
+        taskElement.classList.remove('strikethrough');
+    } 
             
-            // Add event listener to the check icon 
-            checkIcon.addEventListener('click', (event) => {
-                event.stopPropagation();
-                // Toggle the task status
-                task.completed = !task.completed;
-                // Update the icon's src attribute
-                checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-                // Save changes to localStorage or wherever you persist your data
-                // Update the task list to reflect changes
-                saveToStorage();
-                // Update the task card if it is currently displayed
-                showTaskCard(task, project, todoList);
-                // If the task card is currently displayed, update its status element
-                const taskCardStatusElement = document.querySelector('.task-card .show-task-status-label + p');
-                if (taskCardStatusElement && taskCardStatusElement.innerText.includes(task.name)) {
-                    taskCardStatusElement.innerText = task.getCompletedStatus();
-                }
-            });
-
-            // Add event listener to the task link
-            taskElement.addEventListener('click', () => {
-                showTaskCard(task, project, todoList);
-            });
-
-            taskElement.appendChild(checkIcon); 
-            taskElement.appendChild(deleteIcon);  
-            tasksListTitles.appendChild(taskElement);
-        });
+    // Add event listener to the check icon 
+    checkIcon.addEventListener('click', (event) => {
+        event.stopPropagation();
+        task.completed = !task.completed;
+        checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+        taskElement.classList.toggle('strikethrough', task.completed);
+        saveToStorage();
+        showTaskCard(task, project, todoList);
     });
 
+    // Add event listener to the task link
+    taskElement.addEventListener('click', () => {
+        showTaskCard(task, project, todoList);
+    });
+
+    taskElement.appendChild(checkIcon); 
+    taskElement.appendChild(deleteIcon);  
+    tasksListTitles.appendChild(taskElement);
+    });
+});
     tasksListSection.appendChild(tasksListTitles); 
 }
 
@@ -350,6 +347,9 @@ export function showTaskCard(task, project, todoList) {
     // Task name
     const taskNameElement = document.createElement('h2');
     taskNameElement.innerText = task.name;
+    if (task.completed) {
+        taskNameElement.classList.add('strikethrough');
+    }
     taskCardContainer.appendChild(taskNameElement);
 
     // Task description label
@@ -361,6 +361,9 @@ export function showTaskCard(task, project, todoList) {
     // Task description
     const taskDescriptionElement = document.createElement('p');
     taskDescriptionElement.innerText = task.description;
+    if (task.completed) {
+        taskDescriptionElement.classList.add('strikethrough');
+    }
     taskCardContainer.appendChild(taskDescriptionElement);
 
     // Task notes label
@@ -372,6 +375,9 @@ export function showTaskCard(task, project, todoList) {
     // Task notes 
     const taskNotesElement = document.createElement('li');
     taskNotesElement.innerText = task.notes;
+    if (task.completed) {
+        taskNotesElement.classList.add('strikethrough');
+    }
     taskCardContainer.appendChild(taskNotesElement);
 
     // Task date label
@@ -383,6 +389,9 @@ export function showTaskCard(task, project, todoList) {
     // Task date
     const taskDateElement = document.createElement('p');
     taskDateElement.innerText = task.date;
+    if (task.completed) {
+        taskDateElement.classList.add('strikethrough');
+    }
     taskCardContainer.appendChild(taskDateElement);
 
     // Task priority label
@@ -394,9 +403,12 @@ export function showTaskCard(task, project, todoList) {
     // Task priority
     const taskPriorityElement = document.createElement('p');
     taskPriorityElement.innerText = task.priority;
+    if (task.completed) {
+        taskPriorityElement.classList.add('strikethrough');
+    }
     taskCardContainer.appendChild(taskPriorityElement);
 
-    // Task priority label
+    // Task status label
     const taskStatusLabel = document.createElement('h4');
     taskStatusLabel.innerText = 'Completed:';
     taskStatusLabel.classList.add('show-task-status-label');
@@ -413,23 +425,23 @@ export function showTaskCard(task, project, todoList) {
     checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
     checkIcon.setAttribute('height', '15');
     checkIcon.setAttribute('width', '15');
-    
+
     // Add event listener to the check icon to toggle task status
     checkIcon.addEventListener('click', () => {
-        // Toggle the task status
         task.completed = !task.completed;
-        // Update the icon's src attribute
         checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-        // Update the displayed status text
-        taskStatusElement.innerText = task.getCompletedStatus();
-        // Save changes to localStorage or wherever you persist your data
+        taskNameElement.classList.toggle('strikethrough', task.completed);
+        taskDescriptionElement.classList.toggle('strikethrough', task.completed);
+        taskNotesElement.classList.toggle('strikethrough', task.completed);
+        taskDateElement.classList.toggle('strikethrough', task.completed);
+        taskPriorityElement.classList.toggle('strikethrough', task.completed);
+        taskStatusElement.innerText = `${task.getCompletedStatus()}`;
         saveToStorage();
-        // Update the task list to reflect changes
         updateTaskList(todoList);
     });
     taskCardContainer.appendChild(checkIcon);
 
-    // Task priority label
+    // Task project label
     const tasksProjectLabel = document.createElement('h4');
     tasksProjectLabel.innerText = 'Project:';
     tasksProjectLabel.classList.add('show-task-project-label');
@@ -446,6 +458,7 @@ export function showTaskCard(task, project, todoList) {
     // Return taskStatusElement for external updates
     return taskStatusElement;
 }
+
 
 export function showProjectCard(project) {
     // Clear existing content

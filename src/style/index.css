@@ -222,3 +222,7 @@ li.task-item {
     gap: 0.2rem;
     margin-bottom: 0.5rem;
 }
+
+.strikethrough {
+    text-decoration: line-through;
+}
