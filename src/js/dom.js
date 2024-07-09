@@ -311,21 +311,33 @@ export function showTaskCard(task) {
     const taskCardContainer = document.createElement('div');
     taskCardContainer.classList.add('task-card');
 
-    // Task label
-    const taskLabel = document.createElement('h2');
-    taskLabel.innerText = 'Task:';
-    taskLabel.classList.add('new-task-title');
-    taskCardContainer.appendChild(taskLabel);
+    // Task title label
+    const taskTitleLabel = document.createElement('h4');
+    taskTitleLabel.innerText = 'Task:';
+    taskTitleLabel.classList.add('show-task-title-label');
+    taskCardContainer.appendChild(taskTitleLabel);
 
     // Task name
     const taskNameElement = document.createElement('h2');
     taskNameElement.innerText = task.name;
     taskCardContainer.appendChild(taskNameElement);
 
+    // Task description label
+    const taskDescriptionLabel = document.createElement('h4');
+    taskDescriptionLabel.innerText = 'Description:';
+    taskDescriptionLabel.classList.add('show-task-description-label');
+    taskCardContainer.appendChild(taskDescriptionLabel);
+
     // Task description
     const taskDescriptionElement = document.createElement('p');
     taskDescriptionElement.innerText = task.description;
     taskCardContainer.appendChild(taskDescriptionElement);
+
+    // Task notes label
+    const taskShowNotesLabel = document.createElement('h4');
+    taskShowNotesLabel.innerText = 'Notes:';
+    taskShowNotesLabel.classList.add('show-task-notes-label');
+    taskCardContainer.appendChild(taskShowNotesLabel);
 
     // Task notes (checkbox and label)
     const taskNotesElement = document.createElement('div');
@@ -339,15 +351,38 @@ export function showTaskCard(task) {
     taskNotesElement.appendChild(taskNotesLabel);
     taskCardContainer.appendChild(taskNotesElement);
 
+    // Task date label
+    const taskDateLabel = document.createElement('h4');
+    taskDateLabel.innerText = 'Date:';
+    taskDateLabel.classList.add('show-task-date-label');
+    taskCardContainer.appendChild(taskDateLabel);
+
     // Task date
     const taskDateElement = document.createElement('p');
     taskDateElement.innerText = task.date;
     taskCardContainer.appendChild(taskDateElement);
 
+    // Task priority label
+    const taskPriorityLabel = document.createElement('h4');
+    taskPriorityLabel.innerText = 'Priority:';
+    taskPriorityLabel.classList.add('show-task-priority-label');
+    taskCardContainer.appendChild(taskPriorityLabel);
+
     // Task priority
     const taskPriorityElement = document.createElement('p');
     taskPriorityElement.innerText = task.priority;
     taskCardContainer.appendChild(taskPriorityElement);
+
+    // Task priority label
+    const taskStatusLabel = document.createElement('h4');
+    taskStatusLabel.innerText = 'Completed:';
+    taskStatusLabel.classList.add('show-task-status-label');
+    taskCardContainer.appendChild(taskStatusLabel);
+
+    // Task status
+    const taskStatusElement = document.createElement('p');
+    taskStatusElement.innerText = `${task.getCompletedStatus()}`;
+    taskCardContainer.appendChild(taskStatusElement);
 
     // Append task card container to content
     content.appendChild(taskCardContainer);
@@ -370,6 +405,12 @@ export function showProjectCard(project) {
     const projectDescriptionElement = document.createElement('p');
     projectDescriptionElement.innerText = project.description;
     projectCardContainer.appendChild(projectDescriptionElement);
+
+    // Project tasks label
+    const projectTasksLabel = document.createElement('h4');
+    projectTasksLabel.innerText = 'Tasks:';
+    projectTasksLabel.classList.add('show-project-tasks-label');
+    projectCardContainer.appendChild(projectTasksLabel);
 
     // Show tasks related to the project
     const projectTasksList = document.createElement('ul');

@@ -50,7 +50,7 @@ export default class TodoList {
         this.projects.push(defaultProject);
 
         // Default task to Default project
-        const defaultTask = new Task('Buy dog food', 'This is a default task just to serve as an example.', 'Remember to buy dog food after work', '2024-07-08', 'high', 'completed = false');
+        const defaultTask = new Task('Buy dog food', 'This is a default task just to serve as an example.', 'Remember to buy dog food after work', '2024-07-08', 'High', 'No');
         defaultProject.addTask(defaultTask);
 
         this.saveToLocalStorage();

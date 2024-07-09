@@ -12,6 +12,10 @@ export default class Task {
         this.priority = priority;
         this.completed = completed;
     }
+
+    getCompletedStatus() {
+        return this.completed ? 'yes' : 'no';
+    }
 }
 
 export { nextTaskId }; 
