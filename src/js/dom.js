@@ -75,7 +75,7 @@ export function updateTaskList(todoList) {
 
             // Add event listener to the task link
             taskElement.addEventListener('click', () => {
-                showTaskCard(task);
+                showTaskCard(task, project);
             });
 
             taskElement.appendChild(deleteIcon);  
@@ -273,7 +273,7 @@ export function createNewTaskForm() {
             updateTaskList(window.myTodoList);
 
             // Clean up and show task details
-            updateContent(() => showTaskCard(newTask));
+            updateContent(() => showTaskCard(newTask, project));
 
             // Save to localStorage
             saveToStorage();
@@ -303,7 +303,7 @@ export function setupEventListeners(todoList) {
     newTaskButton.addEventListener('click', () => updateContent(createNewTaskForm));
 }
 
-export function showTaskCard(task) {
+export function showTaskCard(task, project) {
     // Clear content
     content.innerHTML = '';
 
@@ -383,6 +383,17 @@ export function showTaskCard(task) {
     const taskStatusElement = document.createElement('p');
     taskStatusElement.innerText = `${task.getCompletedStatus()}`;
     taskCardContainer.appendChild(taskStatusElement);
+
+    // Task priority label
+    const tasksProjectLabel = document.createElement('h4');
+    tasksProjectLabel.innerText = 'Project:';
+    tasksProjectLabel.classList.add('show-task-project-label');
+    taskCardContainer.appendChild(tasksProjectLabel);
+
+    // Project name
+    const taskProjectElement = document.createElement('p');
+    taskProjectElement.innerText = `${project ? project.name : 'No project'}`;
+    taskCardContainer.appendChild(taskProjectElement);
 
     // Append task card container to content
     content.appendChild(taskCardContainer);
