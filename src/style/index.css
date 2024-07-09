@@ -136,7 +136,8 @@ footer, footer > p {
     padding-left: 7rem;
     background-color: rgba(128, 128, 128, 0.153);
     box-shadow: 1px 2px 9px 0px rgba(0, 0, 0, 0.162);
-    max-width: 30rem;
+    max-width: 50rem;
+    max-height: 30rem;
 }
 
 .content {
@@ -190,6 +191,12 @@ footer, footer > p {
     overflow-wrap: break-word; 
 }
 
+.task-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: ;
+}
+
 .task-container {
     padding: 20px;
     margin: 10px 0;
@@ -201,7 +208,6 @@ footer, footer > p {
     justify-content: center;
     align-content: center;
     font-size: 1rem;
-    cursor: pointer;
     border-bottom: dashed 1px black;
     padding-bottom: 5px;
 }
@@ -219,8 +225,9 @@ footer, footer > p {
 li.project-item,
 li.task-item {
     display: flex;
-    gap: 0.2rem;
+    gap: 0.3rem;
     margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 .strikethrough {
@@ -228,6 +235,11 @@ li.task-item {
 }
 
 .check-icon {
-    display: flex;
-    justify-self: start;
+  order: -1;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.task-item{
+
 }
