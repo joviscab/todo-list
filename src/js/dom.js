@@ -346,6 +346,7 @@ export function showTaskCard(task, project, todoList) {
 
     // Task name
     const taskNameElement = document.createElement('h2');
+    taskNameElement.classList.add('show-task-name');
     taskNameElement.innerText = task.name;
     if (task.completed) {
         taskNameElement.classList.add('strikethrough');
@@ -360,6 +361,7 @@ export function showTaskCard(task, project, todoList) {
 
     // Task description
     const taskDescriptionElement = document.createElement('p');
+    taskDescriptionElement.classList.add('show-task-description');
     taskDescriptionElement.innerText = task.description;
     if (task.completed) {
         taskDescriptionElement.classList.add('strikethrough');
@@ -374,6 +376,7 @@ export function showTaskCard(task, project, todoList) {
 
     // Task notes 
     const taskNotesElement = document.createElement('li');
+    taskNotesElement.classList.add('show-task-notes');
     taskNotesElement.innerText = task.notes;
     if (task.completed) {
         taskNotesElement.classList.add('strikethrough');
@@ -388,6 +391,7 @@ export function showTaskCard(task, project, todoList) {
 
     // Task date
     const taskDateElement = document.createElement('p');
+    taskDateElement.classList.add('show-task-date');
     taskDateElement.innerText = task.date;
     if (task.completed) {
         taskDateElement.classList.add('strikethrough');
@@ -402,6 +406,7 @@ export function showTaskCard(task, project, todoList) {
 
     // Task priority
     const taskPriorityElement = document.createElement('p');
+    taskPriorityElement.classList.add('show-task-priority');
     taskPriorityElement.innerText = task.priority;
     if (task.completed) {
         taskPriorityElement.classList.add('strikethrough');
@@ -416,12 +421,13 @@ export function showTaskCard(task, project, todoList) {
 
     // Task status
     const taskStatusElement = document.createElement('p');
+    taskStatusElement.classList.add('show-task-status');
     taskStatusElement.innerText = `${task.getCompletedStatus()}`;
     taskCardContainer.appendChild(taskStatusElement);
 
     // Check icon
     const checkIcon = document.createElement('img');
-    checkIcon.classList.add('check-icon');
+    checkIcon.classList.add('check-icon-show-task');
     checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
     checkIcon.setAttribute('height', '15');
     checkIcon.setAttribute('width', '15');
@@ -449,6 +455,7 @@ export function showTaskCard(task, project, todoList) {
 
     // Project name
     const taskProjectElement = document.createElement('p');
+    taskProjectElement.classList.add('project-name-show');
     taskProjectElement.innerText = `${project ? project.name : 'No project'}`;
     taskCardContainer.appendChild(taskProjectElement);
 

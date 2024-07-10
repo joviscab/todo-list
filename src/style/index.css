@@ -239,7 +239,7 @@ li.task-item {
     height: 25rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .show-task-title-label {
@@ -247,7 +247,7 @@ li.task-item {
     grid-row: 1 / 2;
 }
  
-task-card > h2 {
+.show-task-name {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
 }
@@ -255,4 +255,60 @@ task-card > h2 {
 .show-task-description-label {
     grid-column: 1 / 2;
     grid-row: 3 / 4;
+}
+
+.show-task-description {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+}
+
+.show-task-notes-label {
+    grid-column: 1 / 2;
+    grid-row: 5 / 6;
+}
+
+.show-task-notes {
+    grid-column: 1 / 2;
+    grid-row: 6 / 7;
+}
+
+.show-task-date-label {
+    grid-column: 1 / 2;
+    grid-row: 7 / 8;
+}
+
+.show-task-date {
+    grid-column: 1 / 2;
+    grid-row: 8 / 9;
+}
+
+.show-task-priority-label {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.show-task-priority {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.show-task-status-label {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+}
+
+.show-task-status,
+.check-icon-show-task {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+}
+
+.show-task-project-label {
+    grid-column: 2 / 3;
+    grid-row: 5 / 6;
+} 
+
+.project-name-show {
+    grid-column: 2 / 3;
+    grid-row: 6 / 7; 
 }
