@@ -239,76 +239,99 @@ li.task-item {
     height: 25rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 30px 40px 30px 40px 30px 0.4fr 30px 30px;
+    justify-items: start;
+    align-content: center;
 }
 
 .show-task-title-label {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    align-self: center;
+    border-bottom: dashed 1px black;
 }
  
 .show-task-name {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
+    align-self: center;
+    font-weight: 500;
 }
 
 .show-task-description-label {
     grid-column: 1 / 2;
     grid-row: 3 / 4;
+    align-self: center;
 }
 
 .show-task-description {
     grid-column: 1 / 2;
     grid-row: 4 / 5;
+    align-self: center;
 }
 
 .show-task-notes-label {
     grid-column: 1 / 2;
     grid-row: 5 / 6;
+    align-self: center;
 }
 
 .show-task-notes {
     grid-column: 1 / 2;
     grid-row: 6 / 7;
+    align-self: center;
 }
 
 .show-task-date-label {
     grid-column: 1 / 2;
     grid-row: 7 / 8;
+    align-self: center;
 }
 
 .show-task-date {
     grid-column: 1 / 2;
     grid-row: 8 / 9;
+    align-self: center;
 }
 
 .show-task-priority-label {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
+    align-self: center;
 }
 
 .show-task-priority {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+    align-self: center;
 }
 
 .show-task-status-label {
     grid-column: 2 / 3;
     grid-row: 3 / 4;
+    align-self: center;
 }
 
 .show-task-status,
 .check-icon-show-task {
     grid-column: 2 / 3;
     grid-row: 4 / 5;
+    align-self: center;
+}
+
+.check-icon-show-task {
+    grid-column: 2 / 3;
+    grid-row: 8 / 9;
 }
 
 .show-task-project-label {
     grid-column: 2 / 3;
     grid-row: 5 / 6;
+    align-self: center;
 } 
 
 .project-name-show {
     grid-column: 2 / 3;
     grid-row: 6 / 7; 
+    align-self: center;
 }
