@@ -400,3 +400,7 @@ li.task-item {
     grid-row: 10 / 11; 
     align-self: center;
 }
+
+.high-priority {
+    color: red;
+}

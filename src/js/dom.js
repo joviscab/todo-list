@@ -60,59 +60,66 @@ export function updateTaskList(todoList) {
         project.tasks.forEach(task => {
             const taskElement = document.createElement('li');
             taskElement.classList.add('task-item');
-            taskElement.innerHTML = task.name;
+            taskElement.innerText = task.name;
 
-    // Delete icon
-    const deleteIcon = document.createElement('img');
-    deleteIcon.classList.add('delete-icon');
-    deleteIcon.setAttribute('src', trashIcon);
-    deleteIcon.setAttribute('height', '15');
-    deleteIcon.setAttribute('width', '15');
+            // Apply red color to task name if priority is high
+            if (task.priority === 'High') {
+                taskElement.classList.add('high-priority');
+            }
 
-    // Add event listener to the delete icon
-    deleteIcon.addEventListener('click', (event) => {
-    event.stopPropagation();
-    project.removeTask(task.id);
-    saveToStorage();
-    updateTaskList(todoList);
-});
+            // Delete icon
+            const deleteIcon = document.createElement('img');
+            deleteIcon.classList.add('delete-icon');
+            deleteIcon.setAttribute('src', trashIcon);
+            deleteIcon.setAttribute('height', '15');
+            deleteIcon.setAttribute('width', '15');
 
-    // Check icon
-    const checkIcon = document.createElement('img');
-    checkIcon.classList.add('check-icon');
-    checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-    checkIcon.setAttribute('height', '15');
-    checkIcon.setAttribute('width', '15');
+            // Add event listener to the delete icon
+            deleteIcon.addEventListener('click', (event) => {
+                event.stopPropagation();
+                project.removeTask(task.id);
+                saveToStorage();
+                updateTaskList(todoList);
+            });
 
-    // Apply strikethrough if the task is completed
-    if (task.completed) {
-        taskElement.classList.add('strikethrough');
-    } else {
-        taskElement.classList.remove('strikethrough');
-    } 
-            
-    // Add event listener to the check icon 
-    checkIcon.addEventListener('click', (event) => {
-        event.stopPropagation();
-        task.completed = !task.completed;
-        checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-        taskElement.classList.toggle('strikethrough', task.completed);
-        saveToStorage();
-        showTaskCard(task, project, todoList);
+            // Check icon
+            const checkIcon = document.createElement('img');
+            checkIcon.classList.add('check-icon');
+            checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+            checkIcon.setAttribute('height', '15');
+            checkIcon.setAttribute('width', '15');
+
+            // Apply strikethrough if the task is completed
+            if (task.completed) {
+                taskElement.classList.add('strikethrough');
+            } else {
+                taskElement.classList.remove('strikethrough');
+            }
+
+            // Add event listener to the check icon 
+            checkIcon.addEventListener('click', (event) => {
+                event.stopPropagation();
+                task.completed = !task.completed;
+                checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+                taskElement.classList.toggle('strikethrough', task.completed);
+                saveToStorage();
+                showTaskCard(task, project, todoList);
+            });
+
+            // Add event listener to the task element
+            taskElement.addEventListener('click', () => {
+                showTaskCard(task, project, todoList);
+            });
+
+            taskElement.appendChild(checkIcon);
+            taskElement.appendChild(deleteIcon);
+            tasksListTitles.appendChild(taskElement);
+        });
     });
-
-    // Add event listener to the task link
-    taskElement.addEventListener('click', () => {
-        showTaskCard(task, project, todoList);
-    });
-
-    taskElement.appendChild(checkIcon); 
-    taskElement.appendChild(deleteIcon);  
-    tasksListTitles.appendChild(taskElement);
-    });
-});
-    tasksListSection.appendChild(tasksListTitles); 
+    
+    tasksListSection.appendChild(tasksListTitles);
 }
+
 
 // Update projects list in the sidebar
 export function updateProjectList(todoList) {
@@ -360,6 +367,9 @@ export function showTaskCard(task, project, todoList) {
         if (task.completed) {
             taskNameElement.classList.add('strikethrough');
         }
+        if (task.priority === 'High') {
+            taskNameElement.classList.add('high-priority'); 
+        }
         taskCardContainer.appendChild(taskNameElement);
 
         // Task description label
@@ -374,6 +384,9 @@ export function showTaskCard(task, project, todoList) {
         taskDescriptionElement.innerText = task.description;
         if (task.completed) {
             taskDescriptionElement.classList.add('strikethrough');
+        }
+        if (task.priority === 'High') {
+            taskDescriptionElement.classList.add('high-priority'); 
         }
         taskCardContainer.appendChild(taskDescriptionElement);
 
@@ -390,6 +403,9 @@ export function showTaskCard(task, project, todoList) {
         if (task.completed) {
             taskNotesElement.classList.add('strikethrough');
         }
+        if (task.priority === 'High') {
+            taskNotesElement.classList.add('high-priority'); 
+        }
         taskCardContainer.appendChild(taskNotesElement);
 
         // Task date label
@@ -404,6 +420,9 @@ export function showTaskCard(task, project, todoList) {
         taskDateElement.innerText = format(new Date(task.date), 'dd-MM-yyyy');
         if (task.completed) {
             taskDateElement.classList.add('strikethrough');
+        }
+        if (task.priority === 'High') {
+            taskDateElement.classList.add('high-priority');
         }
         taskCardContainer.appendChild(taskDateElement);
 
@@ -438,6 +457,9 @@ export function showTaskCard(task, project, todoList) {
         taskPriorityElement.innerText = task.priority;
         if (task.completed) {
             taskPriorityElement.classList.add('strikethrough');
+        }
+        if (task.priority === 'High') {
+            taskPriorityElement.classList.add('high-priority'); 
         }
         taskCardContainer.appendChild(taskPriorityElement);
 
@@ -499,6 +521,7 @@ export function showTaskCard(task, project, todoList) {
     refreshTaskCard();
 }
 
+
 export function showProjectCard(project) {
     // Clear existing content
     content.innerHTML = '';
@@ -528,6 +551,12 @@ export function showProjectCard(project) {
     project.tasks.forEach(task => {
         const taskItem = document.createElement('li');
         taskItem.textContent = `Task Name: ${task.name} - Due Date: ${format(new Date(task.date), 'dd-MM-yyyy')}`;
+
+        // Apply red color to task name if priority is High
+        if (task.priority === 'High') {
+            taskItem.classList.add('high-priority');
+        }
+
         if (task.completed) {
             taskItem.classList.add('strikethrough');
         }
