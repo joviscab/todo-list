@@ -14,7 +14,7 @@ export default class Task {
     }
 
     getCompletedStatus() {
-        return this.completed ? 'yes' : 'no';
+        return this.completed ? 'Yes' : 'No';
     }
 }
 

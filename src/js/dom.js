@@ -419,7 +419,7 @@ export function showTaskCard(task, project, todoList) {
         // Task date
         const taskDateElement = document.createElement('p');
         taskDateElement.classList.add('show-task-date');
-        taskDateElement.innerText = format(new Date(task.date), 'dd-MM-yyyy');
+        taskDateElement.innerText = format(new Date(task.date), 'dd/MM/yyyy');
         if (task.completed) {
             taskDateElement.classList.add('strikethrough');
         }
@@ -523,7 +523,6 @@ export function showTaskCard(task, project, todoList) {
     refreshTaskCard();
 }
 
-
 export function showProjectCard(project) {
     // Clear existing content
     content.innerHTML = '';
@@ -552,7 +551,7 @@ export function showProjectCard(project) {
     const projectTasksList = document.createElement('ul');
     project.tasks.forEach(task => {
         const taskItem = document.createElement('li');
-        taskItem.textContent = `Task Name: ${task.name} - Due Date: ${format(new Date(task.date), 'dd-MM-yyyy')}`;
+        taskItem.textContent = `Task Name: ${task.name} - Due Date: ${format(new Date(task.date), 'dd/MM/yyyy')}`;
 
         // Apply red color to task name if priority is High
         if (task.priority === 'High') {
