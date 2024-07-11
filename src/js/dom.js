@@ -6,7 +6,7 @@ import Task, { nextTaskId } from './task.js';
 import trashIcon from '../img/trash.svg';
 import circleCheckIcon from '../img/circle.svg';
 import circleCheckedIcon from '../img/check-circle.svg';
-import { format, addDays } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 const content = document.querySelector('.content');
 const newTaskButton = document.querySelector('.new-task-button');
@@ -401,7 +401,7 @@ export function showTaskCard(task, project, todoList) {
         // Task date
         const taskDateElement = document.createElement('p');
         taskDateElement.classList.add('show-task-date');
-        taskDateElement.innerText = task.date;
+        taskDateElement.innerText = format(new Date(task.date), 'dd-MM-yyyy');
         if (task.completed) {
             taskDateElement.classList.add('strikethrough');
         }
@@ -527,7 +527,7 @@ export function showProjectCard(project) {
     const projectTasksList = document.createElement('ul');
     project.tasks.forEach(task => {
         const taskItem = document.createElement('li');
-        taskItem.textContent = `${task.name} - ${task.date}`;
+        taskItem.textContent = `Task Name: ${task.name} - Due Date: ${format(new Date(task.date), 'dd-MM-yyyy')}`;
         if (task.completed) {
             taskItem.classList.add('strikethrough');
         }
