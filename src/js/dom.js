@@ -526,7 +526,7 @@ export function showProjectCard(project) {
     const projectTasksList = document.createElement('ul');
     project.tasks.forEach(task => {
         const taskItem = document.createElement('li');
-        taskItem.textContent = task.name;
+        taskItem.textContent = `${task.name} - ${task.date}`;
         if (task.completed) {
             taskItem.classList.add('strikethrough');
         }
