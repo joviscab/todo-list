@@ -281,7 +281,6 @@ li.task-item {
     align-self: center;
     border-bottom: dashed 1px black;
     border-right: dashed 1px black;
-
 }
 
 .show-task-notes {
@@ -296,7 +295,6 @@ li.task-item {
     align-self: center;
     border-bottom: dashed 1px black;
     border-right: dashed 1px black;
-
 }
 
 .show-task-date {
@@ -311,7 +309,6 @@ li.task-item {
     align-self: center;
     border-bottom: dashed 1px black;
     border-right: dashed 1px black;
-
 }
 
 .show-task-priority {
@@ -326,7 +323,6 @@ li.task-item {
     align-self: center;
     border-bottom: dashed 1px black;
     border-right: dashed 1px black;
-
 }
 
 .show-task-status {
@@ -347,6 +343,12 @@ li.task-item {
     grid-row: 9 / 10;
     align-self: center;
     margin-left: 20px;
+}
+
+.show-task-priority-dropdown {
+    grid-column: 3 / 4;
+    grid-row: 10 / 11; 
+    width: 70px;
 }
 
 .show-task-project-label {

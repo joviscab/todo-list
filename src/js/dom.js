@@ -338,139 +338,161 @@ export function showTaskCard(task, project, todoList) {
     const taskCardContainer = document.createElement('div');
     taskCardContainer.classList.add('task-card');
 
-    // Task title label
-    const taskTitleLabel = document.createElement('h4');
-    taskTitleLabel.innerText = 'Task:';
-    taskTitleLabel.classList.add('show-task-title-label');
-    taskCardContainer.appendChild(taskTitleLabel);
-
-    // Task name
-    const taskNameElement = document.createElement('h2');
-    taskNameElement.classList.add('show-task-name');
-    taskNameElement.innerText = task.name;
-    if (task.completed) {
-        taskNameElement.classList.add('strikethrough');
-    }
-    taskCardContainer.appendChild(taskNameElement);
-
-    // Task description label
-    const taskDescriptionLabel = document.createElement('h4');
-    taskDescriptionLabel.innerText = 'Description:';
-    taskDescriptionLabel.classList.add('show-task-description-label');
-    taskCardContainer.appendChild(taskDescriptionLabel);
-
-    // Task description
-    const taskDescriptionElement = document.createElement('p');
-    taskDescriptionElement.classList.add('show-task-description');
-    taskDescriptionElement.innerText = task.description;
-    if (task.completed) {
-        taskDescriptionElement.classList.add('strikethrough');
-    }
-    taskCardContainer.appendChild(taskDescriptionElement);
-
-    // Task notes label
-    const taskShowNotesLabel = document.createElement('h4');
-    taskShowNotesLabel.innerText = 'Notes:';
-    taskShowNotesLabel.classList.add('show-task-notes-label');
-    taskCardContainer.appendChild(taskShowNotesLabel);
-
-    // Task notes 
-    const taskNotesElement = document.createElement('li');
-    taskNotesElement.classList.add('show-task-notes');
-    taskNotesElement.innerText = task.notes;
-    if (task.completed) {
-        taskNotesElement.classList.add('strikethrough');
-    }
-    taskCardContainer.appendChild(taskNotesElement);
-
-    // Task date label
-    const taskDateLabel = document.createElement('h4');
-    taskDateLabel.innerText = 'Date:';
-    taskDateLabel.classList.add('show-task-date-label');
-    taskCardContainer.appendChild(taskDateLabel);
-
-    // Task date
-    const taskDateElement = document.createElement('p');
-    taskDateElement.classList.add('show-task-date');
-    taskDateElement.innerText = task.date;
-    if (task.completed) {
-        taskDateElement.classList.add('strikethrough');
-    }
-    taskCardContainer.appendChild(taskDateElement);
-
-    // Task priority label
-    const taskPriorityLabel = document.createElement('h4');
-    taskPriorityLabel.innerText = 'Priority:';
-    taskPriorityLabel.classList.add('show-task-priority-label');
-    taskCardContainer.appendChild(taskPriorityLabel);
-
-    // Task priority
-    const taskPriorityElement = document.createElement('p');
-    taskPriorityElement.classList.add('show-task-priority');
-    taskPriorityElement.innerText = task.priority;
-    if (task.completed) {
-        taskPriorityElement.classList.add('strikethrough');
-    }
-    taskCardContainer.appendChild(taskPriorityElement);
-
-    // Task status label
-    const taskStatusLabel = document.createElement('h4');
-    taskStatusLabel.innerText = 'Completed:';
-    taskStatusLabel.classList.add('show-task-status-label');
-    taskCardContainer.appendChild(taskStatusLabel);
-
-    // Task status
-    const taskStatusElement = document.createElement('p');
-    taskStatusElement.classList.add('show-task-status');
-    taskStatusElement.innerText = `${task.getCompletedStatus()}`;
-    taskCardContainer.appendChild(taskStatusElement);
-
-    // Check icon
-    const textCheckIcon = document.createElement('h4');
-    textCheckIcon.innerText = 'Mark task as complete';
-    textCheckIcon.classList.add('show-task-check-title');
-    const checkIcon = document.createElement('img');
-    checkIcon.classList.add('check-icon-show-task');
-    checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-    checkIcon.setAttribute('height', '15');
-    checkIcon.setAttribute('width', '15');
-
-    // Add event listener to the check icon to toggle task status
-    checkIcon.addEventListener('click', () => {
-        task.completed = !task.completed;
-        checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
-        taskNameElement.classList.toggle('strikethrough', task.completed);
-        taskDescriptionElement.classList.toggle('strikethrough', task.completed);
-        taskNotesElement.classList.toggle('strikethrough', task.completed);
-        taskDateElement.classList.toggle('strikethrough', task.completed);
-        taskPriorityElement.classList.toggle('strikethrough', task.completed);
-        taskStatusElement.innerText = `${task.getCompletedStatus()}`;
-        saveToStorage();
-        updateTaskList(todoList);
-    });
-    taskCardContainer.appendChild(checkIcon);
-    taskCardContainer.appendChild(textCheckIcon);
-
-
-    // Task project label
-    const tasksProjectLabel = document.createElement('h4');
-    tasksProjectLabel.innerText = 'Project:';
-    tasksProjectLabel.classList.add('show-task-project-label');
-    taskCardContainer.appendChild(tasksProjectLabel);
-
-    // Project name
-    const taskProjectElement = document.createElement('p');
-    taskProjectElement.classList.add('project-name-show');
-    taskProjectElement.innerText = `${project ? project.name : 'No project'}`;
-    taskCardContainer.appendChild(taskProjectElement);
-
     // Append task card container to content
     content.appendChild(taskCardContainer);
 
-    // Return taskStatusElement for external updates
-    return taskStatusElement;
-}
+    // Function to refresh the task card
+    function refreshTaskCard() {
+        // Clear existing content in the container
+        taskCardContainer.innerHTML = '';
 
+        // Task title label
+        const taskTitleLabel = document.createElement('h4');
+        taskTitleLabel.innerText = 'Task:';
+        taskTitleLabel.classList.add('show-task-title-label');
+        taskCardContainer.appendChild(taskTitleLabel);
+
+        // Task name
+        const taskNameElement = document.createElement('h2');
+        taskNameElement.classList.add('show-task-name');
+        taskNameElement.innerText = task.name;
+        if (task.completed) {
+            taskNameElement.classList.add('strikethrough');
+        }
+        taskCardContainer.appendChild(taskNameElement);
+
+        // Task description label
+        const taskDescriptionLabel = document.createElement('h4');
+        taskDescriptionLabel.innerText = 'Description:';
+        taskDescriptionLabel.classList.add('show-task-description-label');
+        taskCardContainer.appendChild(taskDescriptionLabel);
+
+        // Task description
+        const taskDescriptionElement = document.createElement('p');
+        taskDescriptionElement.classList.add('show-task-description');
+        taskDescriptionElement.innerText = task.description;
+        if (task.completed) {
+            taskDescriptionElement.classList.add('strikethrough');
+        }
+        taskCardContainer.appendChild(taskDescriptionElement);
+
+        // Task notes label
+        const taskShowNotesLabel = document.createElement('h4');
+        taskShowNotesLabel.innerText = 'Notes:';
+        taskShowNotesLabel.classList.add('show-task-notes-label');
+        taskCardContainer.appendChild(taskShowNotesLabel);
+
+        // Task notes 
+        const taskNotesElement = document.createElement('li');
+        taskNotesElement.classList.add('show-task-notes');
+        taskNotesElement.innerText = task.notes;
+        if (task.completed) {
+            taskNotesElement.classList.add('strikethrough');
+        }
+        taskCardContainer.appendChild(taskNotesElement);
+
+        // Task date label
+        const taskDateLabel = document.createElement('h4');
+        taskDateLabel.innerText = 'Date:';
+        taskDateLabel.classList.add('show-task-date-label');
+        taskCardContainer.appendChild(taskDateLabel);
+
+        // Task date
+        const taskDateElement = document.createElement('p');
+        taskDateElement.classList.add('show-task-date');
+        taskDateElement.innerText = task.date;
+        if (task.completed) {
+            taskDateElement.classList.add('strikethrough');
+        }
+        taskCardContainer.appendChild(taskDateElement);
+
+        // Task priority label
+        const taskPriorityLabel = document.createElement('h4');
+        taskPriorityLabel.innerText = 'Priority:';
+        taskPriorityLabel.classList.add('show-task-priority-label');
+        taskCardContainer.appendChild(taskPriorityLabel);
+
+        // Task priority dropdown
+        const taskPriorityDropdown = document.createElement('select');
+        taskPriorityDropdown.classList.add('show-task-priority-dropdown');
+        const priorities = ['Low', 'Medium', 'High'];
+        priorities.forEach(priority => {
+            const option = document.createElement('option');
+            option.value = priority;
+            option.textContent = priority;
+            if (priority === task.priority) {
+                option.selected = true;
+            }
+            taskPriorityDropdown.appendChild(option);
+        });
+        taskCardContainer.appendChild(taskPriorityDropdown);
+
+        // Placeholder for the task priority value
+        const taskPriorityElement = document.createElement('p');
+        taskPriorityElement.classList.add('show-task-priority');
+        taskPriorityElement.innerText = task.priority;
+        if (task.completed) {
+            taskPriorityElement.classList.add('strikethrough');
+        }
+        taskCardContainer.appendChild(taskPriorityElement);
+
+        // Task status label
+        const taskStatusLabel = document.createElement('h4');
+        taskStatusLabel.innerText = 'Completed:';
+        taskStatusLabel.classList.add('show-task-status-label');
+        taskCardContainer.appendChild(taskStatusLabel);
+
+        // Task status
+        const taskStatusElement = document.createElement('p');
+        taskStatusElement.classList.add('show-task-status');
+        taskStatusElement.innerText = `${task.getCompletedStatus()}`;
+        taskCardContainer.appendChild(taskStatusElement);
+
+        // Check icon
+        const textCheckIcon = document.createElement('h4');
+        textCheckIcon.innerText = 'Mark task as complete';
+        textCheckIcon.classList.add('show-task-check-title');
+        const checkIcon = document.createElement('img');
+        checkIcon.classList.add('check-icon-show-task');
+        checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+        checkIcon.setAttribute('height', '15');
+        checkIcon.setAttribute('width', '15');
+
+        // Add event listener to the check icon to toggle task status
+        checkIcon.addEventListener('click', () => {
+            task.completed = !task.completed;
+            checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
+            refreshTaskCard(); // Refresh task card after status change
+            saveToStorage();
+            updateTaskList(todoList);
+        });
+        taskCardContainer.appendChild(checkIcon);
+        taskCardContainer.appendChild(textCheckIcon);
+
+        // Add event listener to the priority dropdown to change priority
+        taskPriorityDropdown.addEventListener('change', () => {
+            task.priority = taskPriorityDropdown.value;
+            refreshTaskCard(); // Refresh task card after priority change
+            saveToStorage();
+            updateTaskList(todoList);
+        });
+
+        // Task project label
+        const tasksProjectLabel = document.createElement('h4');
+        tasksProjectLabel.innerText = 'Project:';
+        tasksProjectLabel.classList.add('show-task-project-label');
+        taskCardContainer.appendChild(tasksProjectLabel);
+
+        // Project name
+        const taskProjectElement = document.createElement('p');
+        taskProjectElement.classList.add('project-name-show');
+        taskProjectElement.innerText = `${project ? project.name : 'No project'}`;
+        taskCardContainer.appendChild(taskProjectElement);
+    }
+
+    // Initial render
+    refreshTaskCard();
+}
 
 export function showProjectCard(project) {
     // Clear existing content
