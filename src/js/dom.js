@@ -256,7 +256,7 @@ export function createNewTaskForm() {
 
     priorities.forEach(priority => {
         const option = document.createElement('option');
-        option.value = priority.toLowerCase();
+        option.value = priority;
         option.textContent = priority;
         newTaskPriorityDropdown.appendChild(option);
     });
