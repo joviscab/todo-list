@@ -6,6 +6,7 @@ import Task, { nextTaskId } from './task.js';
 import trashIcon from '../img/trash.svg';
 import circleCheckIcon from '../img/circle.svg';
 import circleCheckedIcon from '../img/check-circle.svg';
+import { format, addDays } from 'date-fns';
 
 const content = document.querySelector('.content');
 const newTaskButton = document.querySelector('.new-task-button');
