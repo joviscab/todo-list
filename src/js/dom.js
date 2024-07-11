@@ -413,6 +413,10 @@ export function showTaskCard(task, project, todoList) {
         taskCardContainer.appendChild(taskPriorityLabel);
 
         // Task priority dropdown
+        const dropdownTitle = document.createElement('h4');
+        dropdownTitle.innerText = 'Change task priority';
+        dropdownTitle.classList.add('show-card-dropdown-title');
+        taskCardContainer.appendChild(dropdownTitle);
         const taskPriorityDropdown = document.createElement('select');
         taskPriorityDropdown.classList.add('show-task-priority-dropdown');
         const priorities = ['Low', 'Medium', 'High'];

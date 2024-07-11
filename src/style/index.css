@@ -332,9 +332,10 @@ li.task-item {
 }
 
 .check-icon-show-task {
-    grid-column: 3 / 4;
+    grid-column: 2 / 3;
     grid-row: 9 / 10;
     align-self: center;
+    justify-self: right;
     margin-top: 1px;
 }
 
@@ -342,13 +343,35 @@ li.task-item {
     grid-column: 3 / 4;
     grid-row: 9 / 10;
     align-self: center;
-    margin-left: 20px;
 }
 
 .show-task-priority-dropdown {
     grid-column: 3 / 4;
     grid-row: 10 / 11; 
-    width: 70px;
+    width: 75px;
+    background-color: rgba(143, 143, 143, 0.081);
+    border: 1px dashed #000000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Quicksand', Times, serif;
+    font-weight: 600;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.show-task-priority-dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #f0f8ff; /* Optional: change background color on focus */
+}
+
+.show-task-priority-dropdown:hover {
+    outline: none;
+    border-color: #007bff;
+    background-color: #007bff41;
+}
+
+.show-task-priority-dropdown option:hover {
+    background-color: #007bff;
 }
 
 .show-task-project-label {
@@ -363,5 +386,17 @@ li.task-item {
 .project-name-show {
     grid-column: 3 / 4;
     grid-row: 6 / 7; 
+    align-self: center;
+}
+
+.show-card-dropdown-title {
+    grid-column: 3 / 4;
+    grid-row: 10 / 11; 
+    align-self: center;
+}
+
+.show-task-priority-dropdown {
+    grid-column: 2 / 3;
+    grid-row: 10 / 11; 
     align-self: center;
 }
