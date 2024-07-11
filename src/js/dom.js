@@ -120,7 +120,6 @@ export function updateTaskList(todoList) {
     tasksListSection.appendChild(tasksListTitles);
 }
 
-
 // Update projects list in the sidebar
 export function updateProjectList(todoList) {
     projectsListSection.innerHTML = '';
@@ -307,8 +306,11 @@ export function createNewTaskForm() {
             // Update DOM to reflect changes
             updateTaskList(window.myTodoList);
 
-            // Clean up and show task details
-            updateContent(() => showTaskCard(newTask, project));
+        // Clean up and show task details
+        updateContent(() => {
+            showTaskCard(newTask, project, window.myTodoList);
+        });
+
 
             // Save to localStorage
             saveToStorage();
