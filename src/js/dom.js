@@ -426,6 +426,9 @@ export function showTaskCard(task, project, todoList) {
     taskCardContainer.appendChild(taskStatusElement);
 
     // Check icon
+    const textCheckIcon = document.createElement('h4');
+    textCheckIcon.innerText = 'Mark task as complete';
+    textCheckIcon.classList.add('show-task-check-title');
     const checkIcon = document.createElement('img');
     checkIcon.classList.add('check-icon-show-task');
     checkIcon.setAttribute('src', task.completed ? circleCheckedIcon : circleCheckIcon);
@@ -446,6 +449,8 @@ export function showTaskCard(task, project, todoList) {
         updateTaskList(todoList);
     });
     taskCardContainer.appendChild(checkIcon);
+    taskCardContainer.appendChild(textCheckIcon);
+
 
     // Task project label
     const tasksProjectLabel = document.createElement('h4');
